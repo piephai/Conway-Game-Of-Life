@@ -1,0 +1,112 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/Life.csproj": {}
+  },
+  "projects": {
+    "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/Display.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/Display.csproj",
+        "projectName": "display",
+        "projectPath": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/Display.csproj",
+        "packagesPath": "/Users/emiliepomeroy/.nuget/packages/",
+        "outputPath": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/emiliepomeroy/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.202/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/Life.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/Life.csproj",
+        "projectName": "life",
+        "projectPath": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/Life.csproj",
+        "packagesPath": "/Users/emiliepomeroy/.nuget/packages/",
+        "outputPath": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/emiliepomeroy/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/Display.csproj": {
+                "projectPath": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/Display.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.202/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

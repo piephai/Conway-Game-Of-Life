@@ -1,0 +1,9 @@
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/bin/Debug/netcoreapp3.1/display.deps.json
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/bin/Debug/netcoreapp3.1/display.dll
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/bin/Debug/netcoreapp3.1/display.pdb
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/obj/Debug/netcoreapp3.1/Display.csprojAssemblyReference.cache
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/obj/Debug/netcoreapp3.1/Display.csproj.CoreCompileInputs.cache
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/obj/Debug/netcoreapp3.1/Display.AssemblyInfoInputs.cache
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/obj/Debug/netcoreapp3.1/Display.AssemblyInfo.cs
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/obj/Debug/netcoreapp3.1/display.dll
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/obj/Debug/netcoreapp3.1/display.pdb

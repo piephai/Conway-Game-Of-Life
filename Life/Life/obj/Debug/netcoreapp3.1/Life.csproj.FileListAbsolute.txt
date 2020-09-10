@@ -1,0 +1,15 @@
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/bin/Debug/netcoreapp3.1/life.deps.json
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/bin/Debug/netcoreapp3.1/life.runtimeconfig.json
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/bin/Debug/netcoreapp3.1/life.runtimeconfig.dev.json
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/bin/Debug/netcoreapp3.1/life.dll
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/bin/Debug/netcoreapp3.1/life.pdb
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/bin/Debug/netcoreapp3.1/display.dll
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/bin/Debug/netcoreapp3.1/display.pdb
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/Debug/netcoreapp3.1/Life.csprojAssemblyReference.cache
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/Debug/netcoreapp3.1/Life.csproj.CoreCompileInputs.cache
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/Debug/netcoreapp3.1/Life.AssemblyInfoInputs.cache
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/Debug/netcoreapp3.1/Life.AssemblyInfo.cs
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/Debug/netcoreapp3.1/Life.csproj.CopyComplete
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/Debug/netcoreapp3.1/life.dll
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/Debug/netcoreapp3.1/life.pdb
+/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Life/obj/Debug/netcoreapp3.1/Life.genruntimeconfig.cache
