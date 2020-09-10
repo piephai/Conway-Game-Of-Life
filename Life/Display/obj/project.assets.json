@@ -8,24 +8,26 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "/Users/emiliepomeroy/.nuget/packages/": {}
+    "C:\\Users\\n10025421\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/Display.csproj",
+      "projectUniqueName": "C:\\Users\\n10025421\\Documents\\CAB201-2020\\CAB201_2020S2_ProjectPartA_n10265813\\Life\\Display\\Display.csproj",
       "projectName": "display",
-      "projectPath": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/Display.csproj",
-      "packagesPath": "/Users/emiliepomeroy/.nuget/packages/",
-      "outputPath": "/Users/emiliepomeroy/Downloads/CAB201_2020S2_ProjectPartA_nXXXXXXXX(6)/CAB201_2020S2_ProjectPartA_nXXXXXXXX/Life/Display/obj/",
+      "projectPath": "C:\\Users\\n10025421\\Documents\\CAB201-2020\\CAB201_2020S2_ProjectPartA_n10265813\\Life\\Display\\Display.csproj",
+      "packagesPath": "C:\\Users\\n10025421\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\n10025421\\Documents\\CAB201-2020\\CAB201_2020S2_ProjectPartA_n10265813\\Life\\Display\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/emiliepomeroy/.config/NuGet/NuGet.Config"
+        "C:\\Users\\n10025421\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -56,7 +58,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.202/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
       }
     }
   }
