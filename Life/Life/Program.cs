@@ -25,13 +25,16 @@ namespace Life
             string[] arrayAll = new string[args.Length];
             var listOfInts = new List<int>();
             var indexOption = new List<int>();
+            List<int> errorList = new List<int>();
             bool correctInput = true;
 
-            //if (args.Length == 0)
-            //{
-            //    Console.WriteLine("WARNING: No command line arguments provided.");
-            //    return;
-            //}
+            if (args.Length == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("WARNING: No command line arguments provided, reverting to defaults.");
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
             if (args.Length > 0)
             {
                 for (int i = 0; i < arrayAll.Length; i++)
@@ -42,10 +45,13 @@ namespace Life
                     }
                     else
                     {
-                        Console.WriteLine("WARNING: Parameters must be provided after options.");
-                        return;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("WARNING: Parameters must be provided after options, reverting to defaults");
+                        Console.ForegroundColor = ConsoleColor.White;
+
                     }
                 }
+                
 
                 int numParaSinceOption = 0;
                 indexOption.Add(0);
@@ -66,15 +72,23 @@ namespace Life
                 listOfInts.Add(numParaSinceOption);
                 for (int i = 0; i < listOfInts.ToArray().Length; i++)
                 {
-
+                    Console.ForegroundColor = ConsoleColor.Red;
                     correctInput = OptionArgument(arrayAll, indexOption.ToArray()[i], listOfInts.ToArray()[i]);
-                    if (!correctInput)
-                    {
-                        //Console.WriteLine("Incorrect input");
-                        //Console.ReadKey();
-                        return;
-                    }
+                    
                 }
+                if (!correctInput)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+
+                    Console.WriteLine("Warning: Issue processing command line arguments, reverting to defaults.");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+
+                    Console.WriteLine("Success: command line arguments processed.");
+                }
+                Console.ForegroundColor = ConsoleColor.White;
             }
 
             PrintProgramSetting(rows, columns, periodic, stepMode, randomFactor, generations, inputFile, maxUpdateRate);
@@ -109,14 +123,14 @@ namespace Life
             Grid grid = new Grid(rows, columns);
 
             // Wait for user to press a key...
-            Console.WriteLine("Press any key to start...");
-            Console.ReadKey();
+            Console.WriteLine("Press spaacebar to start...");
+            while (Console.ReadKey().Key != ConsoleKey.Spacebar) ;
 
             // Initialize the grid window (this will resize the window and buffer)
             grid.InitializeWindow();
 
             // Set the footnote (appears in the bottom left of the screen).
-            grid.SetFootnote("Smiley");
+            grid.SetFootnote(0.ToString());
 
             Stopwatch watch = new Stopwatch();
 
@@ -143,13 +157,17 @@ namespace Life
                 if (stepMode)
                 {
                     while (Console.ReadKey().Key != ConsoleKey.Spacebar) ;
+                    grid.SetFootnote((i+1).ToString());
                 }
                 else
                 {
                     while (watch.ElapsedMilliseconds < 1000 / maxUpdateRate) ;
                 }
+                
 
             }
+            grid.SetFootnote(cells.GetLength(0).ToString());
+
 
             // Set complete marker as true
             grid.IsComplete = true;
@@ -167,6 +185,7 @@ namespace Life
         //Determine which optional argument the user has inputted in and verify whether the user input the correct parameter for the option  
         public static bool OptionArgument(string[] arr, int startingIndex, int numOfParam)
         {
+            
 
             if (arr[startingIndex] == "--dimensions")
             {
@@ -185,7 +204,8 @@ namespace Life
 
                         Console.WriteLine("Dimension is out of range. " +
                             "Rows and columns must be a positive integer between 4 - 48 (inclusive) ");
-                        Console.ReadKey();
+                        
+                        //errorList.Add(1);
                         return false;
                     }
                 }
@@ -193,7 +213,8 @@ namespace Life
                 {
                     Console.WriteLine("Dimensions has two parameters:" +
                         " --dimensions <rows> <columns> which is a positive integer between 4 - 48 (inclusive)");
-                    Console.ReadKey();
+                    
+                    //errorList.Add(1);
                     return false;
                 }
             }
@@ -212,7 +233,7 @@ namespace Life
                 else
                 {
                     Console.WriteLine("--step takes no parameters but was given one");
-                    Console.ReadKey();
+                    
                     return false;
                 }
             }
@@ -230,7 +251,7 @@ namespace Life
                     else
                     {
                         Console.WriteLine("Random factor must be a float between 0 and 1 (inclusive)");
-                        Console.ReadKey();
+                        
                         return false;
                     }
                 }
@@ -244,7 +265,7 @@ namespace Life
                 {
                     Console.WriteLine("Random has one parameter but more than one parameter was provided" + 
                         "--random <probability> where probability is a float between 0 and 1 (inclusive)");
-                    Console.ReadKey();
+                    
                     return false;
                 }
             }
@@ -261,20 +282,14 @@ namespace Life
                     else
                     {
                         Console.WriteLine("Generation value must be a positive non-zero integer");
-                        Console.ReadKey();
+                       
                         return false; 
                     }
                 }
-                //else if (numOfParam < 1)
-                //{
-                //    Console.WriteLine("--generations take one parameter of <number> but none was provided");
-                //    Console.ReadKey();
-                //    return false;
-                //}
                 else
                 {
                     Console.WriteLine("--generations <number> only take one parameter");
-                    Console.ReadKey();
+                    
                     return false;
                 }
             }
@@ -291,14 +306,14 @@ namespace Life
                     else
                     {
                         Console.WriteLine("The path provided is not in the right .seed format");
-                        Console.ReadKey();
+                        
                         return false;
                     }
                 }
                 else
                 {
                     Console.WriteLine("--seed <filename> only take one parameter");
-                    Console.ReadKey();
+                    
                     return false;
                 }
             }
@@ -316,14 +331,14 @@ namespace Life
                     else
                     {
                         Console.WriteLine("Max update rate must be a float between 1 and 30 (inclusive)");
-                        Console.ReadKey();
+                        
                         return false;
                     }
                 }
                 else
                 {
                     Console.WriteLine("--max-update <update per second> Only take one parameter");
-                    Console.ReadKey();
+                    
                     return false;
                 }
 
@@ -390,11 +405,50 @@ namespace Life
             {
                 Console.WriteLine(String.Format("{0,27}{1, -26}\n", "Step Mode: ", "No"));
             }
-            
-
         }
 
+        //public static void CheckeERrorMesssage()
+        //{
+            
 
+        //    foreach (int item in caseList)
+        //        {
+        //        switch (caseList[item])
+        //    {
+        //            case 1:
+        //                Console.WriteLine("wrong");
+        //                break;
+
+        //                //case 2:
+        //                //    Console.WriteLine();
+        //                //    break;
+
+        //                //case 3:
+        //                //    Console.WriteLine();
+        //                //    break;
+
+        //                //case 4:
+        //                //    Console.WriteLine();
+        //                //    break;
+
+        //                //case 5:
+        //                //    Console.WriteLine();
+        //                //    break;
+
+        //                //case 6:
+        //                //    Console.WriteLine();
+        //                //    break;
+
+        //                //case 7:
+        //                //    Console.WriteLine();
+        //                //    break;
+
+        //                //case 8:
+        //                //    Console.WriteLine();
+        //                //    break;
+        //        }
+        //    }
+        //}
 
         
     }
