@@ -107,28 +107,13 @@ namespace Life
             // Specify grid dimensions and active cells...
 
 
-            //int[,] cells = {
-            //    { 5, 3 },
-            //    { 4, 3 },
-            //    { 5, 5 },
-            //    { 4, 5 },
-            //    { 2, 1 },
-            //    { 1, 2 },
-            //    { 1, 3 },
-            //    { 1, 4 },
-            //    { 1, 5 },
-            //    { 1, 6 },
-            //    { 2, 7 }
-            //};
-
-
 
             // Construct grid...
             Grid grid = new Grid(rows, columns);
 
 
             // Wait for user to press a key...
-            Console.WriteLine("Press spaacebar to start...");
+            Console.WriteLine("Press spacebar to start...");
             while (Console.ReadKey().Key != ConsoleKey.Spacebar) ;
 
             // Initialize the grid window (this will resize the window and buffer)
@@ -154,24 +139,77 @@ namespace Life
             //InitialiseCellBuffer(ref cells, rows, columns);
 
             // For each of the cells...
-            for (int i = 0; i < generations; i++)
+
+            List<int> cellStateChecker = new List<int>();
+            float isAliveCellGeneratedCounter = 0f;
+            float isDeadCellGeneratedCounter = 0f;
+            
+
+            for (int row = 0; row < rows; row++)
             {
+                for (int column = 0; column < columns; column++)
+                {
+                    // Update grid with a new cell...
+                    CellState cellState = (CellState)enumValues.GetValue(random.Next(0, 2));
+
+                    if (cellState.ToString() == "Full" && isAliveCellGeneratedCounter < randomFactor)
+                    {
+                        isAliveCellGeneratedCounter += 0.01f;
+
+                    }
+                    else if (cellState.ToString() == "Blank" && isDeadCellGeneratedCounter < randomFactor)
+                    {
+                        isDeadCellGeneratedCounter += 0.01f;
+                    }
+                    else if (cellState.ToString() == "Blank" && isDeadCellGeneratedCounter >= randomFactor)
+                    {
+                        cellState = CellState.Full;
+                    }
+                    else
+                    {
+                        cellState = CellState.Blank;
+                    }
+                    grid.UpdateCell(row, column, cellState);
+                   
+                    // Render updates to the console window...
+                    grid.Render();
+                }
+            }
+
+            for (int i = 1; i < generations; i++)
+            {
+                watch.Restart();
                 for (int row = 0; row < rows; row++)
                 {
                     for (int column = 0; column < columns; column++)
                     {
-                        watch.Restart();
+                        var cell = grid.GetCell(row, column);
+                        var adjacent = grid.GetAdjacentCells(row, column);
+                        cellStateChecker.Add(cell.Calculate(adjacent));
 
-                        CellState cellState = (CellState)enumValues.GetValue(random.Next(0, 2));
-
+                    }
+                }
+                for (int row = 0; row < rows; row++)
+                {
+                    for (int column = 0; column < columns; column++)
+                    {
+                        var cell = grid.GetCell(row, column);
+                        var adjacent = grid.GetAdjacentCells(row, column);
+                        var state = cell.Calculate(adjacent);
                         // Update grid with a new cell...
-                        grid.UpdateCell(row, column, cellState);
+                        if (isAlive)
+                        {
+                            grid.UpdateCell(row, column, CellState.Full);
+                        }
+
 
                         // Render updates to the console window...
                         grid.Render();
 
                     }
                 }
+
+
                 if (stepMode)
                 {
                     while (Console.ReadKey().Key != ConsoleKey.Spacebar) ;

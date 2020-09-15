@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace Display
 {
@@ -155,6 +156,62 @@ namespace Display
             cells[row][col].SetState(state);
             cells[row][col].Draw(ref buffer, CellRowOffset(row), CellColOffset(col), CellWidth, CellHeight);
         }
+
+        public Cell GetCell(int row, int col)
+        {
+            return cells[row][col];
+        }
+
+        public List <Cell> GetAdjacentCells(int row, int col)
+        {
+            List<Cell> adjacent = new List<Cell>();
+
+            if (row < rows && col > 0)
+            {
+                adjacent.Add(cells[row + 1][col - 1]);
+            }
+
+            if (row < rows)
+            {
+                adjacent.Add(cells[row + 1][col]);
+            }
+
+            if (row < rows && col < cols)
+            {
+                adjacent.Add(cells[row + 1][col + 1]);
+            }
+
+            if (col > 0)
+            {
+                adjacent.Add(cells[row][col - 1]);
+            }
+
+            if (col < cols)
+            {
+                adjacent.Add(cells[row][col + 1]);
+            }
+
+            if (row > 0 && col > 0)
+            {
+                adjacent.Add(cells[row - 1][col - 1]);
+            }
+
+            if (row > 0)
+            {
+                adjacent.Add(cells[row - 1][col]);
+            }
+
+            if (row > 0 && col < cols)
+            {
+                adjacent.Add(cells[row - 1][col + 1]);
+            }
+
+            return adjacent;
+        }
+
+        
+
+
 
         /// <summary>
         /// Renders the current state of the grid (all updates applied after the last render will be rendered).

@@ -1,4 +1,7 @@
-﻿namespace Display
+﻿using System.Collections.Generic;
+using System;
+
+namespace Display
 {
     /// <summary>
     /// States for the cells in the grid. Each cell state is associated with a 
@@ -47,6 +50,38 @@
         public void SetState(CellState state)
         {
             this.state = state;
+        }
+
+        public int Calculate(List<Cell> adjacent)
+        {
+            // All the rules are based on the number of adjacent cells.
+            List<Cell> tempCellList = new List<Cell>();
+            foreach (Cell cell in adjacent)
+            {
+                if (cell.state.ToString() == Enum.GetName(typeof(CellState), 1))
+                {
+                    tempCellList.Add(cell);
+                }
+            }
+            var count = tempCellList.Count;
+
+            // Less than two or greater than three is always dead.
+            if (count < 2 || count > 3)
+            {
+                //return false;
+                return 1;
+            }
+            else if (count == 3)
+            {
+                return 0;
+                //return true;
+                // For live (OldState = true) cells, they are alive. For dead ones,
+                // they live only if there is exactly three. This uses the OR logic to
+                // to combine the two statements together.
+
+            }
+            return 0;
+            
         }
 
         /// <summary>
