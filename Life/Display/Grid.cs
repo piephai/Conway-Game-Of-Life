@@ -157,11 +157,13 @@ namespace Display
             cells[row][col].Draw(ref buffer, CellRowOffset(row), CellColOffset(col), CellWidth, CellHeight);
         }
 
+        //Get the current cell
         public Cell GetCell(int row, int col)
         {
             return cells[row][col];
         }
 
+        //Check for all adjacent cells of the current cell then add the adjacent cells to a list
         public List <Cell> GetAdjacentCells(int row, int col)
         {
             List<Cell> adjacent = new List<Cell>();

@@ -53,9 +53,9 @@ namespace Display
         }
 
         //Check if the cell is alive or dead. If alive return true
-        public bool isAlive (Cell cell)
+        public bool IsAlive (Cell cell)
         {
-            if (cell.state == CellState.Full)
+            if (cell.state == CellState.Full) //Check the cell state of the current cell. If it is equal to CellState.Full then the current cell is alive
             {
                 return true;
             }
@@ -65,26 +65,27 @@ namespace Display
 
         public CellState Calculate(List<Cell> adjacent, Cell currentCell)
         {
-            //bool isAlive = true;
-            // All the rules are based on the number of adjacent cells.
-            List<Cell> tempCellList = new List<Cell>();
+
+            // Initialise the list of cells
+            List<Cell> aliveCellList = new List<Cell>();
             foreach (Cell surroundingCell in adjacent)
             {
                 if (surroundingCell.state == CellState.Full)
-                {
-                    tempCellList.Add(surroundingCell);
+                {//If the cell state = full then cell is alive. That cell is then added to the aliveCellList
+                    aliveCellList.Add(surroundingCell);
                 }
             }
-            var count = tempCellList.Count;
+            int count = aliveCellList.Count; 
 
-            // Less than two or greater than three is always dead.
-            if (isAlive(currentCell))
+            if (IsAlive(currentCell)) //Call method isAlive to check whether the current cell is alive or dead
             {
+            // Less than two or greater than three is always dead.
                 if (count < 2 || count > 3)
                 {
                     //return false;
                     return CellState.Blank;
                 }
+                //Alive cells can only have exactly 2 or 3 live cell neighbours to stay alive 
                 else if (count == 2 || count == 3)
                 {
 
@@ -98,7 +99,7 @@ namespace Display
                 return CellState.Blank;
             }
             else
-            {
+            {//Dead cells need exactly 3 alive cells to become alive
                 if (count == 3)
                 {
                     return CellState.Full;

@@ -18,17 +18,18 @@ namespace Life
         private static int generations = 50;
         private static string inputFile = "N/A";
         private static float maxUpdateRate = 5f;
-        private static char[][] cells = new char[rows][];
 
 
         static void Main(string[] args)
         {
-            //GridDimensions gridDimensions = new GridDimensions();
+            //Forward Declarations
             string[] arrayAll = new string[args.Length];
             var listOfInts = new List<int>();
             var indexOption = new List<int>();
-            List<int> errorList = new List<int>();
             bool correctInput = true;
+
+
+
 
             if (args.Length == 0)
             {
@@ -59,15 +60,15 @@ namespace Life
                 indexOption.Add(0);
                 for (int i = 1; i < arrayAll.Length; i++)
                 {
-                    if (arrayAll[i].Contains("--"))
-                    {
+                    if (arrayAll[i].Contains("--")) 
+                    {//If the element/argument in the arrayAll contain -- (thus has an option) then add the numParaSinceOption to the list of ints
                         listOfInts.Add(numParaSinceOption);
                         indexOption.Add(i);
                         numParaSinceOption = 0;
                     }
                     else
                     {
-
+                        //Increment the numParaSinceOption until there is another option or until for loop reach it limit
                         numParaSinceOption += 1;
                     }
                 }
@@ -95,21 +96,10 @@ namespace Life
 
             PrintProgramSetting(rows, columns, periodic, stepMode, randomFactor, generations, inputFile, maxUpdateRate);
 
-
-
-            // The following is just an example of how to use the Display.Grid class
-            // Think of it as a "Hello World" program for using this small API
-            // If it works correctly, it should display a little smiley face cell
-            // by cell. The program will end after you press any key.
-
-            // Feel free to remove or modify it when you are comfortable with it.
-
-            // Specify grid dimensions and active cells...
-
-
-
-            // Construct grid...
             Grid grid = new Grid(rows, columns);
+            Stopwatch watch = new Stopwatch();
+            CellState[][] cellStateArray = new CellState[rows][];
+
 
 
             // Wait for user to press a key...
@@ -122,56 +112,67 @@ namespace Life
             // Set the footnote (appears in the bottom left of the screen).
             grid.SetFootnote(0.ToString());
 
-            Stopwatch watch = new Stopwatch();
-            Array enumValues = Enum.GetValues(typeof(CellState));
-            Random random = new Random();
+            //Initialise the cellStateArray
+            InitialiseCellStateJaggedArray(cellStateArray);
 
-
-      
-            
             for (int i = 0; i < generations; i++)
             {
-                watch.Restart();
 
+                watch.Restart();
+                grid.SetFootnote((i + 1).ToString()); //Display the footnote as the current generation
                 for (int row = 0; row < rows; row++)
                 {
                     for (int column = 0; column < columns; column++)
                     {
-                        if (i == 0)
+                        if (i == 0) //i = 0 mean that it is the first generation
                         {
-                            int cellState = random.Next(0, Convert.ToInt32((randomFactor/1) * 100));
-                            if (cellState == 1)
-                            {
+                            //Random choice on whether the cell is alive or dead
+                            int randomChoice = RandomFactorProbability(randomFactor);
+
+                            if (randomChoice == 1)
+                            {//If randomChoice is 1 mean that the cell will be alive
                                 grid.UpdateCell(row, column, CellState.Full);
                             }
                             else
                             {
                                 grid.UpdateCell(row, column, CellState.Blank);
                             }
-                            //Cell cell = grid.GetCell(row, column);
-                            //List<Cell> adjacent = grid.GetAdjacentCells(row, column);
                             grid.Render();
                         }
                         else
                         {
                             Cell cell = grid.GetCell(row, column);
+                            //Add all adjacent cells into a list
                             List<Cell> adjacent = grid.GetAdjacentCells(row, column);
+
+                            //Calculate whether the current cell will become dead or alive in the next generation
                             CellState state = cell.Calculate(adjacent, cell);
 
-                            //Update grid with a new cell...
-                            grid.UpdateCell(row, column, state);
+                            cellStateArray[row][column] = state;
 
 
-                            // Render updates to the console window...
-                            grid.Render();
                         }
 
                     }
                 }
-                grid.SetFootnote((i).ToString());
+                
+                if (i > 0)
+                { /*The below for loop can only occur after the first generation since the adjacent cells can only be calculated
+                once there are cells that has been generated already */
+                    for (int row = 0; row < rows; row++)
+                    {
+                        for (int column = 0; column < columns; column++)
+                        {
+                            //Update grid with the new cell state from cellStateArray
+                            grid.UpdateCell(row, column, cellStateArray[row][column]);
+                            // Render updates to the console window...
+                            grid.Render();
+                        }
+                    }
+                }
 
                 if (stepMode)
-                {
+                {//If stepmode is enable then the user will have to press spacebar before it can go onto the next generation
                     while (Console.ReadKey().Key != ConsoleKey.Spacebar) ;
 
                 }
@@ -179,7 +180,7 @@ namespace Life
                 {
                     while (watch.ElapsedMilliseconds < 1000 / maxUpdateRate) ;
                 }
-                
+
             }
             grid.SetFootnote(generations.ToString());
 
@@ -195,21 +196,77 @@ namespace Life
 
             // Revert grid window size and buffer to normal
             grid.RevertWindow();
+
+        }
+
+
+
+            // The following is just an example of how to use the Display.Grid class
+            // Think of it as a "Hello World" program for using this small API
+            // If it works correctly, it should display a little smiley face cell
+            // by cell. The program will end after you press any key.
+
+            // Feel free to remove or modify it when you are comfortable with it.
+
+            // Specify grid dimensions and active cells...
+
+        
+
+        public static void InitialiseCellStateJaggedArray(CellState [][] cellStateArray)
+        {
+            for (int row = 0; row < rows; row++)
+            {
+                cellStateArray[row] = new CellState[columns];
+
+            }
         }
 
         //Determine which optional argument the user has inputted in and verify whether the user input the correct parameter for the option  
+
+        public static int RandomFactorProbability(float randomFactor)
+        {
+            var random = new Random();
+            List<int> probabilityList = new List<int>();
+            float tempNum = randomFactor * 100;
+            int aliveNum = 1;
+            for (int i = 0; i < tempNum; i++)
+            {//Alive number cannot exceed the max number of alive cells that can exist
+                probabilityList.Add(aliveNum);
+            }
+
+            float remainingNum = 100 - tempNum;
+            int deadNum = 0;
+            for (int i = 0; i < remainingNum; i++)
+            {
+                probabilityList.Add(deadNum);
+            }
+
+            //Get a random index number from the probabilityList
+            int randomIndex = random.Next(probabilityList.Count); 
+
+            //Get the value at a particular index in the probabilityList. Value should only be either 0 or 1
+            int randomVal = probabilityList[randomIndex]; 
+            probabilityList.Clear();
+            return randomVal;
+            
+        }
+        /// <summary>
+        /// Updates the state of a cell at specified grid coordinates.
+        /// </summary>
+        /// <param name="arr">The arr of all arguments.</param>
+        /// <param name="startingIndex">The index of where there is an option argument.</param>
+        /// <param name="numOfParam">The number of parameters that the user had entered after a particular option.</param>
         public static bool OptionArgument(string[] arr, int startingIndex, int numOfParam)
         {
 
-
-            if (arr[startingIndex] == "--dimensions")
+            if (arr[startingIndex] == "--dimensions") //If user enter --dimensions
             {
                 if (numOfParam == 2)
                 {
                     int tempRow = int.Parse(arr[startingIndex + 1]);
                     int tempColumn = int.Parse(arr[startingIndex + 2]);
-                    if (tempRow >= 4 && tempRow <= 48 && tempColumn >= 4 && tempColumn <= 48)
-                    {
+                    if (tempRow >= 4 && tempRow <= 48 && tempColumn >= 4 && tempColumn <= 48) 
+                    {//Check if the number of rows and columns is in between 4 and 48
                         rows = int.Parse(arr[startingIndex + 1]);
                         columns = int.Parse(arr[startingIndex + 2]);
                         return true;
@@ -220,7 +277,6 @@ namespace Life
                         Console.WriteLine("Dimension is out of range. " +
                             "Rows and columns must be a positive integer between 4 - 48 (inclusive) ");
 
-                        //errorList.Add(1);
                         return false;
                     }
                 }
@@ -229,7 +285,6 @@ namespace Life
                     Console.WriteLine("Dimensions has two parameters:" +
                         " --dimensions <rows> <columns> which is a positive integer between 4 - 48 (inclusive)");
 
-                    //errorList.Add(1);
                     return false;
                 }
             }
@@ -365,22 +420,6 @@ namespace Life
 
         }
 
-
-        //public static char [][] InitialiseCellBuffer (ref char [][] cells, int rows, int columns)
-        //{
-        //    Cell cell = new Cell();
-        //    int currentRow = 0;
-        //    int currentColumn = 0;
-
-        //    for(int i = 0; i < rows; i++)
-        //    {
-        //        cells[i] = new char[columns];
-        //    }
-
-        //    cell.Draw(ref cells, currentRow, currentColumn, columns, rows);
-
-        //    return cells;
-        //}
         public static void PrintProgramSetting(int rows, int columns, bool periodic, bool stepMode, float randomFactor, int generations, string inputFile, float maxUpdateRate)
         {
 
@@ -400,7 +439,7 @@ namespace Life
             }
             Console.WriteLine(String.Format("{0, 27}{1, -26}", "Rows: ", rows));
             Console.WriteLine(String.Format("{0, 27}{1, -26}", "Columns: ", columns));
-            Console.WriteLine(String.Format("{0, 27}{1, -26}", "Random Factor: ", randomFactor + "%"));
+            Console.WriteLine(String.Format("{0, 27}{1, -26}", "Random Factor: ", (int)(randomFactor * 100) + "%"));
             if (stepMode)
             {
                 Console.WriteLine(String.Format("{0,27}{1, -26}", "Step Mode: ", "Yes"));
