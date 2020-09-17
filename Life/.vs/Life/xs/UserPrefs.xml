@@ -1,18 +1,17 @@
 ﻿<Properties StartupConfiguration="{07833CE1-D92D-4297-851F-95BEEB3FD61B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Display/Grid.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Life/Program.cs">
     <Files>
-      <File FileName="Life/Program.cs" Line="1" Column="1" />
       <File FileName="Display/Cell.cs" Line="1" Column="1" />
-      <File FileName="Display/Grid.cs" Line="1" Column="1" />
+      <File FileName="Life/Program.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Life" expanded="True">
-            <Node name="Display" expanded="True">
-              <Node name="Grid.cs" selected="True" />
+            <Node name="Display" expanded="True" />
+            <Node name="Life" expanded="True">
+              <Node name="Program.cs" selected="True" />
             </Node>
-            <Node name="Life" expanded="True" />
           </Node>
         </State>
       </Pad>
