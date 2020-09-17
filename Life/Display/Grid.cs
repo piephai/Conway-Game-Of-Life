@@ -166,17 +166,18 @@ namespace Display
         {
             List<Cell> adjacent = new List<Cell>();
 
-            if (row < rows && col > 0)
+            if (row < rows - 1&& col > 0)
             {
+                
                 adjacent.Add(cells[row + 1][col - 1]);
             }
 
-            if (row < rows)
+            if (row < rows - 1)
             {
                 adjacent.Add(cells[row + 1][col]);
             }
 
-            if (row < rows && col < cols)
+            if (row < rows - 1 && col < cols - 1)
             {
                 adjacent.Add(cells[row + 1][col + 1]);
             }
@@ -186,7 +187,7 @@ namespace Display
                 adjacent.Add(cells[row][col - 1]);
             }
 
-            if (col < cols)
+            if (col < cols - 1)
             {
                 adjacent.Add(cells[row][col + 1]);
             }
@@ -201,7 +202,7 @@ namespace Display
                 adjacent.Add(cells[row - 1][col]);
             }
 
-            if (row > 0 && col < cols)
+            if (row > 0 && col < cols - 1)
             {
                 adjacent.Add(cells[row - 1][col + 1]);
             }

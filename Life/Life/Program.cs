@@ -127,88 +127,48 @@ namespace Life
             Random random = new Random();
 
 
-            //for (int i = 0; i < totalCells; i++)
-            //{
-            //    cells[i, 0] = currentRow;
-            //    cells[i, 1] = currentColumn;
-
-            //    currentColumn++;
-            //    currentRow++;
-            //}
-            //int totalCells = rows * columns;
-            //InitialiseCellBuffer(ref cells, rows, columns);
-
-            // For each of the cells...
-
-            List<int> cellStateChecker = new List<int>();
-            float isAliveCellGeneratedCounter = 0f;
-            float isDeadCellGeneratedCounter = 0f;
+      
             
-
-            for (int row = 0; row < rows; row++)
-            {
-                for (int column = 0; column < columns; column++)
-                {
-                    // Update grid with a new cell...
-                    CellState cellState = (CellState)enumValues.GetValue(random.Next(0, 2));
-
-                    if (cellState.ToString() == "Full" && isAliveCellGeneratedCounter < randomFactor)
-                    {
-                        isAliveCellGeneratedCounter += 0.01f;
-
-                    }
-                    else if (cellState.ToString() == "Blank" && isDeadCellGeneratedCounter < randomFactor)
-                    {
-                        isDeadCellGeneratedCounter += 0.01f;
-                    }
-                    else if (cellState.ToString() == "Blank" && isDeadCellGeneratedCounter >= randomFactor)
-                    {
-                        cellState = CellState.Full;
-                    }
-                    else
-                    {
-                        cellState = CellState.Blank;
-                    }
-                    grid.UpdateCell(row, column, cellState);
-                   
-                    // Render updates to the console window...
-                    grid.Render();
-                }
-            }
-
-            for (int i = 1; i < generations; i++)
+            for (int i = 0; i < generations; i++)
             {
                 watch.Restart();
-                for (int row = 0; row < rows; row++)
-                {
-                    for (int column = 0; column < columns; column++)
-                    {
-                        var cell = grid.GetCell(row, column);
-                        var adjacent = grid.GetAdjacentCells(row, column);
-                        cellStateChecker.Add(cell.Calculate(adjacent));
 
-                    }
-                }
                 for (int row = 0; row < rows; row++)
                 {
                     for (int column = 0; column < columns; column++)
                     {
-                        var cell = grid.GetCell(row, column);
-                        var adjacent = grid.GetAdjacentCells(row, column);
-                        var state = cell.Calculate(adjacent);
-                        // Update grid with a new cell...
-                        if (isAlive)
+                        if (i == 0)
                         {
-                            grid.UpdateCell(row, column, CellState.Full);
+                            int cellState = random.Next(0, Convert.ToInt32((randomFactor/1) * 100));
+                            if (cellState == 1)
+                            {
+                                grid.UpdateCell(row, column, CellState.Full);
+                            }
+                            else
+                            {
+                                grid.UpdateCell(row, column, CellState.Blank);
+                            }
+                            //Cell cell = grid.GetCell(row, column);
+                            //List<Cell> adjacent = grid.GetAdjacentCells(row, column);
+                            grid.Render();
+                        }
+                        else
+                        {
+                            Cell cell = grid.GetCell(row, column);
+                            List<Cell> adjacent = grid.GetAdjacentCells(row, column);
+                            CellState state = cell.Calculate(adjacent, cell);
+
+                            //Update grid with a new cell...
+                            grid.UpdateCell(row, column, state);
+
+
+                            // Render updates to the console window...
+                            grid.Render();
                         }
 
-
-                        // Render updates to the console window...
-                        grid.Render();
-
                     }
                 }
-
+                grid.SetFootnote((i).ToString());
 
                 if (stepMode)
                 {
@@ -219,7 +179,7 @@ namespace Life
                 {
                     while (watch.ElapsedMilliseconds < 1000 / maxUpdateRate) ;
                 }
-                grid.SetFootnote((i + 1).ToString());
+                
             }
             grid.SetFootnote(generations.ToString());
 

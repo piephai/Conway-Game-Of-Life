@@ -52,35 +52,63 @@ namespace Display
             this.state = state;
         }
 
-        public int Calculate(List<Cell> adjacent)
+        //Check if the cell is alive or dead. If alive return true
+        public bool isAlive (Cell cell)
         {
+            if (cell.state == CellState.Full)
+            {
+                return true;
+            }
+            return false;
+            
+        }
+
+        public CellState Calculate(List<Cell> adjacent, Cell currentCell)
+        {
+            //bool isAlive = true;
             // All the rules are based on the number of adjacent cells.
             List<Cell> tempCellList = new List<Cell>();
-            foreach (Cell cell in adjacent)
+            foreach (Cell surroundingCell in adjacent)
             {
-                if (cell.state.ToString() == Enum.GetName(typeof(CellState), 1))
+                if (surroundingCell.state == CellState.Full)
                 {
-                    tempCellList.Add(cell);
+                    tempCellList.Add(surroundingCell);
                 }
             }
             var count = tempCellList.Count;
 
             // Less than two or greater than three is always dead.
-            if (count < 2 || count > 3)
+            if (isAlive(currentCell))
             {
-                //return false;
-                return 1;
-            }
-            else if (count == 3)
-            {
-                return 0;
-                //return true;
-                // For live (OldState = true) cells, they are alive. For dead ones,
-                // they live only if there is exactly three. This uses the OR logic to
-                // to combine the two statements together.
+                if (count < 2 || count > 3)
+                {
+                    //return false;
+                    return CellState.Blank;
+                }
+                else if (count == 2 || count == 3)
+                {
 
+                    return CellState.Full;
+                    //return true;
+                    // For live (OldState = true) cells, they are alive. For dead ones,
+                    // they live only if there is exactly three. This uses the OR logic to
+                    // to combine the two statements together.
+
+                }
+                return CellState.Blank;
             }
-            return 0;
+            else
+            {
+                if (count == 3)
+                {
+                    return CellState.Full;
+                }
+                else
+                {
+                    return CellState.Blank;
+                }
+            }
+           
             
         }
 
