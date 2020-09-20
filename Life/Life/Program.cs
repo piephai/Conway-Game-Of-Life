@@ -143,6 +143,10 @@ namespace Life
                         {
                             Cell cell = grid.GetCell(row, column);
                             //Add all adjacent cells into a list
+                            //grid.GetAdjacentCells(row, column);
+
+                            //GridDimensions gridDimenions = new GridDimensions();
+
                             List<Cell> adjacent = grid.GetAdjacentCells(row, column);
 
                             //Calculate whether the current cell will become dead or alive in the next generation

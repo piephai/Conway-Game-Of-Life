@@ -63,7 +63,7 @@ namespace Display
             
         }
 
-        public CellState Calculate(List<Cell> adjacent, Cell currentCell)
+        public CellState Calculate(List<Cell>adjacent, Cell currentCell)
         {
 
             // Initialise the list of cells

@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
+
 namespace Display
 {
     /// <summary>
@@ -66,7 +67,6 @@ namespace Display
                 throw new ArgumentOutOfRangeException($"The number of grid rows is not within the acceptable range " +
                     $"of values ({MinSize} to {MaxSize}).");
             }
-
             if (cols < MinSize || cols > MaxSize)
             {
                 throw new ArgumentOutOfRangeException($"The number of grid columns is not within the acceptable range " +
@@ -164,49 +164,105 @@ namespace Display
         }
 
         //Check for all adjacent cells of the current cell then add the adjacent cells to a list
-        public List <Cell> GetAdjacentCells(int row, int col)
+        public List <Cell> GetAdjacentCells(int row, int col, int periodic)
         {
+            //GridDimensions gridDimensions = new GridDimensions();
             List<Cell> adjacent = new List<Cell>();
-
-            if (row < rows - 1&& col > 0)
+            //List<Cell> periodic = new List<Cell>();
+            if (periodic == 0 || periodic == 1)
             {
-                
-                adjacent.Add(cells[row + 1][col - 1]);
+                if (row < rows - 1 && col > 0)
+                {
+                    adjacent.Add(cells[row + 1][col - 1]);
+                    //gridDimensions.AddToAdjacentList(cells[row + 1][col - 1]);
+
+                }
+
+                if (row < rows - 1)
+                {
+                    adjacent.Add(cells[row + 1][col]);
+                    //gridDimensions.AddToAdjacentList(cells[row + 1][col]);
+                }
+
+                if (row < rows - 1 && col < cols - 1)
+                {
+                    adjacent.Add(cells[row + 1][col + 1]);
+                }
+
+                if (col > 0)
+                {
+                    //gridDimensions.AddToAdjacentList(cells[row][col - 1]);
+                    adjacent.Add(cells[row][col - 1]);
+                }
+
+                if (col < cols - 1)
+                {
+                    //gridDimensions.AddToAdjacentList(cells[row][col + 1]);
+                    adjacent.Add(cells[row][col + 1]);
+                }
+
+                if (row > 0 && col > 0)
+                {
+                    //gridDimensions.AddToAdjacentList(cells[row - 1][col - 1]);
+                    adjacent.Add(cells[row - 1][col - 1]);
+                }
+
+                if (row > 0)
+                {
+
+                    adjacent.Add(cells[row - 1][col]);
+                }
+
+                if (row > 0 && col < cols - 1)
+                {
+                    adjacent.Add(cells[row - 1][col + 1]);
+                }
             }
 
-            if (row < rows - 1)
-            {
-                adjacent.Add(cells[row + 1][col]);
-            }
+            //If statements to check if cell is periodic
 
-            if (row < rows - 1 && col < cols - 1)
+            if (periodic == 1)
             {
-                adjacent.Add(cells[row + 1][col + 1]);
-            }
 
-            if (col > 0)
-            {
-                adjacent.Add(cells[row][col - 1]);
-            }
+                if (row < 0 && col < 0)
+                {
+                    adjacent.Add(cells[rows - 1][cols - 1]);
+                }
 
-            if (col < cols - 1)
-            {
-                adjacent.Add(cells[row][col + 1]);
-            }
+                if (row > rows && col > cols)
+                {
+                    adjacent.Add(cells[0][0]);
+                }
 
-            if (row > 0 && col > 0)
-            {
-                adjacent.Add(cells[row - 1][col - 1]);
-            }
+                if (row < 0 && col > cols)
+                {
+                    adjacent.Add(cells[rows - 1][0]);
+                }
 
-            if (row > 0)
-            {
-                adjacent.Add(cells[row - 1][col]);
-            }
+                if (row > rows && col < 0)
+                {
+                    adjacent.Add(cells[0][cols - 1]);
+                }
 
-            if (row > 0 && col < cols - 1)
-            {
-                adjacent.Add(cells[row - 1][col + 1]);
+                if (col < 0)
+                {
+                    adjacent.Add(cells[row][cols - 1]);
+                }
+
+                if (row < 0)
+                {
+                    adjacent.Add(cells[rows - 1][col]);
+                }
+
+                if (col > cols)
+                {
+                    adjacent.Add(cells[row][0]);
+                }
+
+                if (row > rows)
+                {
+                    adjacent.Add(cells[0][col]);
+                }
             }
 
             return adjacent;
