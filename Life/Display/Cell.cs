@@ -82,7 +82,6 @@ namespace Display
             // Less than two or greater than three is always dead.
                 if (count < 2 || count > 3)
                 {
-                    //return false;
                     return CellState.Blank;
                 }
                 //Alive cells can only have exactly 2 or 3 live cell neighbours to stay alive 
@@ -90,10 +89,6 @@ namespace Display
                 {
 
                     return CellState.Full;
-                    //return true;
-                    // For live (OldState = true) cells, they are alive. For dead ones,
-                    // they live only if there is exactly three. This uses the OR logic to
-                    // to combine the two statements together.
 
                 }
                 return CellState.Blank;

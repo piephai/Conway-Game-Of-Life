@@ -164,108 +164,36 @@ namespace Display
         }
 
         //Check for all adjacent cells of the current cell then add the adjacent cells to a list
-        public List <Cell> GetAdjacentCells(int row, int col, int periodic)
+        public List<Cell> GetAdjacentCells(int row, int col, int periodic)
         {
-            //GridDimensions gridDimensions = new GridDimensions();
+
             List<Cell> adjacent = new List<Cell>();
-            //List<Cell> periodic = new List<Cell>();
-            if (periodic == 0 || periodic == 1)
-            {
-                if (row < rows - 1 && col > 0)
-                {
-                    adjacent.Add(cells[row + 1][col - 1]);
-                    //gridDimensions.AddToAdjacentList(cells[row + 1][col - 1]);
-
-                }
-
-                if (row < rows - 1)
-                {
-                    adjacent.Add(cells[row + 1][col]);
-                    //gridDimensions.AddToAdjacentList(cells[row + 1][col]);
-                }
-
-                if (row < rows - 1 && col < cols - 1)
-                {
-                    adjacent.Add(cells[row + 1][col + 1]);
-                }
-
-                if (col > 0)
-                {
-                    //gridDimensions.AddToAdjacentList(cells[row][col - 1]);
-                    adjacent.Add(cells[row][col - 1]);
-                }
-
-                if (col < cols - 1)
-                {
-                    //gridDimensions.AddToAdjacentList(cells[row][col + 1]);
-                    adjacent.Add(cells[row][col + 1]);
-                }
-
-                if (row > 0 && col > 0)
-                {
-                    //gridDimensions.AddToAdjacentList(cells[row - 1][col - 1]);
-                    adjacent.Add(cells[row - 1][col - 1]);
-                }
-
-                if (row > 0)
-                {
-
-                    adjacent.Add(cells[row - 1][col]);
-                }
-
-                if (row > 0 && col < cols - 1)
-                {
-                    adjacent.Add(cells[row - 1][col + 1]);
-                }
-            }
-
-            //If statements to check if cell is periodic
 
             if (periodic == 1)
             {
-
-                if (row < 0 && col < 0)
+                for (int i = row - 1; i <= row + 1; i++)
                 {
-                    adjacent.Add(cells[rows - 1][cols - 1]);
-                }
-
-                if (row > rows && col > cols)
-                {
-                    adjacent.Add(cells[0][0]);
-                }
-
-                if (row < 0 && col > cols)
-                {
-                    adjacent.Add(cells[rows - 1][0]);
-                }
-
-                if (row > rows && col < 0)
-                {
-                    adjacent.Add(cells[0][cols - 1]);
-                }
-
-                if (col < 0)
-                {
-                    adjacent.Add(cells[row][cols - 1]);
-                }
-
-                if (row < 0)
-                {
-                    adjacent.Add(cells[rows - 1][col]);
-                }
-
-                if (col > cols)
-                {
-                    adjacent.Add(cells[row][0]);
-                }
-
-                if (row > rows)
-                {
-                    adjacent.Add(cells[0][col]);
+                    for (int j = col - 1; j <= col + 1; j++)
+                    {
+                        if (i == row && j == col)
+                        {
+                            continue;  // Skip the cell itself
+                        }
+                        adjacent.Add(cells[(i + rows) % rows][(j + cols) % cols]);
+                    }
                 }
             }
-
-            return adjacent;
+            else
+            {
+                for (int i = row - 1; i <= row + 1; i++)
+                    for (int j = col - 1; j <= col + 1; j++)
+                        if (i >= 0 && j >= 0 && i < rows && j < cols && !(i == row && j == col))
+                        {
+                            adjacent.Add(cells[i][j]);
+                        }                         
+            }
+                return adjacent;
+            
         }
 
         

@@ -60,7 +60,7 @@ namespace Life
                 indexOption.Add(0);
                 for (int i = 1; i < arrayAll.Length; i++)
                 {
-                    if (arrayAll[i].Contains("--")) 
+                    if (arrayAll[i].Contains("--"))
                     {//If the element/argument in the arrayAll contain -- (thus has an option) then add the numParaSinceOption to the list of ints
                         listOfInts.Add(numParaSinceOption);
                         indexOption.Add(i);
@@ -115,16 +115,16 @@ namespace Life
             //Initialise the cellStateArray
             InitialiseCellStateJaggedArray(cellStateArray);
 
-            for (int i = 0; i < generations; i++)
-            {
-
-                watch.Restart();
-                grid.SetFootnote((i + 1).ToString()); //Display the footnote as the current generation
-                for (int row = 0; row < rows; row++)
+                for (int i = 0; i < generations; i++)
                 {
+
+                    watch.Restart();
+                    grid.SetFootnote((i).ToString()); //Display the footnote as the current generation
+                    for (int row = 0; row < rows; row++)
+                    {
                     for (int column = 0; column < columns; column++)
                     {
-                        if (i == 0) //i = 0 mean that it is the first generation
+                        if (i == 0 && inputFile == "N/A") //i = 0 mean that it is the first generation
                         {
                             //Random choice on whether the cell is alive or dead
                             int randomChoice = RandomFactorProbability(randomFactor);
@@ -139,7 +139,24 @@ namespace Life
                             }
                             grid.Render();
                         }
-                        else
+
+                        else if (i == 0 && inputFile != "N/A")
+                        {
+                            //Update the grid using the input file row and column and state     
+                            grid.UpdateCell(2, 0, CellState.Full);
+                            grid.UpdateCell(1, 1, CellState.Full);
+                            grid.UpdateCell(1, 2, CellState.Full);
+                            grid.UpdateCell(2, 2, CellState.Full);
+                            grid.UpdateCell(3, 2, CellState.Full);
+
+                            grid.Render();
+
+                            
+
+
+
+                        } 
+                        else 
                         {
                             Cell cell = grid.GetCell(row, column);
                             //Add all adjacent cells into a list
@@ -147,61 +164,77 @@ namespace Life
 
                             //GridDimensions gridDimenions = new GridDimensions();
 
-                            List<Cell> adjacent = grid.GetAdjacentCells(row, column);
+                            if (periodic)
+                            {
 
-                            //Calculate whether the current cell will become dead or alive in the next generation
-                            CellState state = cell.Calculate(adjacent, cell);
+                                List<Cell> adjacent = grid.GetAdjacentCells(row, column, 1);
 
-                            cellStateArray[row][column] = state;
+                                //Calculate whether the current cell will become dead or alive in the next generation
+                                CellState state = cell.Calculate(adjacent, cell);
+
+                                cellStateArray[row][column] = state;
+                            }
+                            else
+                            {
+                                List<Cell> adjacent = grid.GetAdjacentCells(row, column, 0);
+
+                                //Calculate whether the current cell will become dead or alive in the next generation
+                                CellState state = cell.Calculate(adjacent, cell);
+
+                                cellStateArray[row][column] = state;
+                            }
+                        }
 
 
                         }
 
                     }
-                }
-                
-                if (i > 0)
-                { /*The below for loop can only occur after the first generation since the adjacent cells can only be calculated
+
+
+                    if (i > 0)
+                    { /*The below for loop can only occur after the first generation since the adjacent cells can only be calculated
                 once there are cells that has been generated already */
-                    for (int row = 0; row < rows; row++)
-                    {
-                        for (int column = 0; column < columns; column++)
+                        for (int row = 0; row < rows; row++)
                         {
-                            //Update grid with the new cell state from cellStateArray
-                            grid.UpdateCell(row, column, cellStateArray[row][column]);
-                            // Render updates to the console window...
-                            grid.Render();
+                            for (int column = 0; column < columns; column++)
+                            {
+                                //Update grid with the new cell state from cellStateArray
+                                grid.UpdateCell(row, column, cellStateArray[row][column]);
+                                // Render updates to the console window...
+                                grid.Render();
+                            }
                         }
                     }
-                }
 
-                if (stepMode)
-                {//If stepmode is enable then the user will have to press spacebar before it can go onto the next generation
-                    while (Console.ReadKey().Key != ConsoleKey.Spacebar) ;
+                    if (stepMode)
+                    {//If stepmode is enable then the user will have to press spacebar before it can go onto the next generation
+                        while (Console.ReadKey().Key != ConsoleKey.Spacebar) ;
+
+                    }
+                    else
+                    {
+                        while (watch.ElapsedMilliseconds < 1000 / maxUpdateRate) ;
+                    }
 
                 }
-                else
-                {
-                    while (watch.ElapsedMilliseconds < 1000 / maxUpdateRate) ;
-                }
+                grid.SetFootnote(generations.ToString());
+
+
+                // Set complete marker as true
+                grid.IsComplete = true;
+
+                // Render updates to the console window (grid should now display COMPLETE)...
+                grid.Render();
+
+                // Wait for user to press a key...
+                Console.ReadKey();
+
+                // Revert grid window size and buffer to normal
+                grid.RevertWindow();
 
             }
-            grid.SetFootnote(generations.ToString());
-
-
-            // Set complete marker as true
-            grid.IsComplete = true;
-
-            // Render updates to the console window (grid should now display COMPLETE)...
-            grid.Render();
-
-            // Wait for user to press a key...
-            Console.ReadKey();
-
-            // Revert grid window size and buffer to normal
-            grid.RevertWindow();
-
-        }
+   
+        
 
 
 
