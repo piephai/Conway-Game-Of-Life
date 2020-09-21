@@ -196,9 +196,6 @@ namespace Display
             
         }
 
-        
-
-
 
         /// <summary>
         /// Renders the current state of the grid (all updates applied after the last render will be rendered).
