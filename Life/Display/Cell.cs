@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System;
+
 
 namespace Display
 {
@@ -34,7 +34,7 @@ namespace Display
         };
 
         private CellState state;
-        
+
         /// <summary>
         /// Initializes the cell (as blank)
         /// </summary>
@@ -55,46 +55,55 @@ namespace Display
         //Check if the cell is alive or dead. If alive return true
         public bool IsAlive (Cell cell)
         {
-            if (cell.state == CellState.Full) //Check the cell state of the current cell. If it is equal to CellState.Full then the current cell is alive
+            //Check the cell state of the current cell. If it is equal to CellState.Full then the current cell is alive
+            if (cell.state == CellState.Full) 
             {
                 return true;
             }
             return false;
-            
         }
 
+        /// <summary>
+        /// Checks how many alive neighbours the cells have and whether it should be alive or dead 
+        /// </summary>
+        /// <param name="adjacent"> The list of neighbouring cells </param>
+        /// <param name="currentCell"> Current cell </param>
+        /// <returns> List of the adjacent cells and current cell </returns>
+        /// 
         public CellState Calculate(List<Cell>adjacent, Cell currentCell)
         {
-
             // Initialise the list of cells
             List<Cell> aliveCellList = new List<Cell>();
             foreach (Cell surroundingCell in adjacent)
             {
+                //If the cell state = full then cell is alive. That cell is then added to the aliveCellList
                 if (surroundingCell.state == CellState.Full)
-                {//If the cell state = full then cell is alive. That cell is then added to the aliveCellList
+                {
                     aliveCellList.Add(surroundingCell);
                 }
             }
-            int count = aliveCellList.Count; 
+            int count = aliveCellList.Count;
 
-            if (IsAlive(currentCell)) //Call method isAlive to check whether the current cell is alive or dead
+            //Call method isAlive to check whether the current cell is alive or dead
+            if (IsAlive(currentCell)) 
             {
-            // Less than two or greater than three is always dead.
+                // Less than two or greater than three is always dead.
                 if (count < 2 || count > 3)
                 {
                     return CellState.Blank;
                 }
+
                 //Alive cells can only have exactly 2 or 3 live cell neighbours to stay alive 
                 else if (count == 2 || count == 3)
                 {
-
                     return CellState.Full;
-
                 }
                 return CellState.Blank;
             }
+
+            //Dead cells need exactly 3 alive cells to become alive
             else
-            {//Dead cells need exactly 3 alive cells to become alive
+            {
                 if (count == 3)
                 {
                     return CellState.Full;
@@ -104,8 +113,6 @@ namespace Display
                     return CellState.Blank;
                 }
             }
-           
-            
         }
 
         /// <summary>

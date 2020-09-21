@@ -2,8 +2,6 @@
 using System.Diagnostics;
 using Display;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.IO;
 
 namespace Life
@@ -68,6 +66,7 @@ namespace Life
                 }
                 listOfInts.Add(numParaSinceOption);
 
+                //Validate the user input to see if they follow their specified conditions
                 for (int i = 0; i < listOfInts.ToArray().Length; i++)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -228,17 +227,8 @@ namespace Life
                 grid.RevertWindow();
             }
 
-            // The following is just an example of how to use the Display.Grid class
-            // Think of it as a "Hello World" program for using this small API
-            // If it works correctly, it should display a little smiley face cell
-            // by cell. The program will end after you press any key.
-
-            // Feel free to remove or modify it when you are comfortable with it.
-
-            // Specify grid dimensions and active cells...
-
         /// <summary>
-        /// 
+        /// Initialising the null spaces in the array of type CellState
         /// </summary>
         /// <param name="cellStateArray"></param>
 
@@ -249,7 +239,6 @@ namespace Life
                 cellStateArray[row] = new CellState[columns];
             }
         }
-
 
         /// <summary>
         /// Sets the random factor probability by creating a list of 100 numbers filled with either a 1 (alive) or
@@ -353,34 +342,40 @@ namespace Life
             // If user enters --random
             else if (arr[startingIndex] == "--random")
             {
-                if (numOfParam == 1) // Checking that one parameter is provided
+                // Checking that one parameter is provided
+                if (numOfParam == 1) 
                 {
+                    // Checks the parameter is a float between 0 and 1
                     float tempRandom = float.Parse(arr[startingIndex + 1]);
-                    if (tempRandom <= 1 && tempRandom >= 0) 
+                    if (tempRandom <= 1 && tempRandom >= 0)  
                     {
                         randomFactor = tempRandom;
                         return true;
                     }
+                    // Displays an error message if parameter is not a float between 0 and 1
                     else
                     {
                         Console.WriteLine("Random factor must be a float between 0 and 1 (inclusive)");
                         return false;
                     }
                 }
-                else if (numOfParam == 0)
+                // Error message displayed if no parameters are provided
+                else if (numOfParam == 0) 
                 {
                     Console.WriteLine("Random has one parameter but none was provided: " +
                                     "--random <probability> where probability is a float between 0 and 1 (inclusive)");
                     return false;
                 }
+                // Error message displayed if more than one parameter is provided
                 else
                 {
                     Console.WriteLine("Random has one parameter but more than one parameter was provided" +
                                     "--random <probability> where probability is a float between 0 and 1 (inclusive)");
-
                     return false;
                 }
             }
+
+            // If user enters --generations, the if and else statements check whether there is 1 integer parameter 
             else if (arr[startingIndex] == "--generations")
             {
                 if (numOfParam == 1)
@@ -391,26 +386,29 @@ namespace Life
                         generations = tempGeneration;
                         return true;
                     }
+                    // Error message shown if generation value is not a positive non-zero integer
                     else
                     {
                         Console.WriteLine("Generation value must be a positive non-zero integer");
-
                         return false;
                     }
                 }
+                // Error message displayed if one parameter isn't provided
                 else
                 {
                     Console.WriteLine("--generations <number> only take one parameter");
-
                     return false;
                 }
             }
 
+            /* If user enters --seed, the if and else statements use CheckIfSeedDimensionsFits method to check
+             * that the input file is a seed and the dimensions fit */
             else if (arr[startingIndex] == "--seed")
             {
                 if (numOfParam == 1)
                 {
-                    if (arr[startingIndex + 1].Contains(".seed"))
+                    string fullPath = Path.GetFullPath(arr[startingIndex + 1]);
+                    if (Path.GetExtension(fullPath) == ".seed")
                     {
                         inputFile = arr[startingIndex + 1];
                         bool tempChecker = CheckIfSeedDimensionsFits();
@@ -423,21 +421,22 @@ namespace Life
                             return false;
                         }
                     }
+                    // Error message if seed file is not provided
                     else
                     {
                         Console.WriteLine("The path provided is not in the right .seed format");
-
                         return false;
                     }
                 }
+                // Error message if there isn't one parameter 
                 else
                 {
                     Console.WriteLine("--seed <filename> only take one parameter");
-
                     return false;
                 }
             }
 
+            // If user enters --max-update, the if and else statements check the parameter is 1 float between 1 and 30
             else if (arr[startingIndex] == "--max-update")
             {
                 if (numOfParam == 1)
@@ -448,39 +447,47 @@ namespace Life
                         maxUpdateRate = tempMaxUpdateRate;
                         return true;
                     }
+                    // Display error message if input is not a floart between 1 and 30
                     else
                     {
                         Console.WriteLine("Max update rate must be a float between 1 and 30 (inclusive)");
-
                         return false;
                     }
                 }
+                // Display error message if one parameter is not supplied
                 else
                 {
                     Console.WriteLine("--max-update <update per second> Only take one parameter");
-
                     return false;
                 }
-
             }
             else
             {
                 return false;
             }
-
         }
 
-        public static void PrintProgramSetting(int rows, int columns, bool periodic, bool stepMode, float randomFactor, int generations, string inputFile, float maxUpdateRate)
-        {
+        /// <summary>
+        /// This method will print out the supplied or default program settings to the command line. 
+        /// </summary>
+        /// <param name="rows"> Number of rows in the grid, default is 16 </param>
+        /// <param name="columns"> Number of columns in the grid, default is 16 </param>
+        /// <param name="periodic"> Whether periodic conditions are true or false, default is false </param>
+        /// <param name="stepMode"> Whether stepMode is true or false, default is false </param>
+        /// <param name="randomFactor"> The random factor, default is 0.5 </param>
+        /// <param name="generations"> The number of generations, default is 50 </param>
+        /// <param name="inputFile"> Whether an input file is provided and the file name, the default is N/A </param>
+        /// <param name="maxUpdateRate"> The maximum number of generational updates per second, default is 5 </param>
 
+        public static void PrintProgramSetting(int rows, int columns, bool periodic, bool stepMode, float randomFactor,
+            int generations, string inputFile, float maxUpdateRate)
+        {
             Console.WriteLine(String.Format("\nThe program will use the following settings:\n"));
-            int wordPosition = inputFile.Length + 10;
 
             Console.WriteLine(String.Format("{0, 27}{1, -26}", "Input File: ", inputFile));
             Console.WriteLine(String.Format("{0, 27}{1, -26}", "Generations: ", generations));
 
-            //Fix the formatting of the maxUpdateRate
-            Console.WriteLine(String.Format("{0, 27}{1, -26}", "Refresh rate: ", maxUpdateRate + " updates/s")); /// ADD
+            Console.WriteLine(String.Format("{0, 27}{1, -26}", "Refresh rate: ", maxUpdateRate + " updates/s")); 
             if (periodic)
             {
                 Console.WriteLine(String.Format("{0, 27}{1, -26}", "Periodic: ", "Yes"));
@@ -491,8 +498,11 @@ namespace Life
             }
             Console.WriteLine(String.Format("{0, 27}{1, -26}", "Rows: ", rows));
             Console.WriteLine(String.Format("{0, 27}{1, -26}", "Columns: ", columns));
-            //Need fixing the printed % should be in the 0.00 format (2 decimals or floats)
-            Console.WriteLine(String.Format("{0, 27}{1, -26}", "Random Factor: ", Math.Round(Convert.ToDecimal(randomFactor * 100.00f), 2) + "%"));
+
+            // Calculates the random factor to print out the float in "00.00%" format
+            float randomNum = randomFactor * 100.00f;
+            Console.WriteLine(String.Format("{0,26}{1, 0: ##.00}{2,0}", "Random Factor:", randomNum, "%"));
+
             if (stepMode)
             {
                 Console.WriteLine(String.Format("{0,27}{1, -26}", "Step Mode: ", "Yes"));
@@ -503,6 +513,10 @@ namespace Life
             }
         }
 
+        /// <summary>
+        /// Checks whether the dimensions on the input file fit the grid
+        /// </summary>
+        /// <returns> Returns true or false depending on whether the dimensions fit </returns>
         public static bool CheckIfSeedDimensionsFits()
         {
             using (StreamReader file = new StreamReader(inputFile))
@@ -523,10 +537,8 @@ namespace Life
                     //Update the grid using the input file row and column 
                     cellRow.Add(Convert.ToInt32(fields[0]));
                     cellCol.Add(Convert.ToInt32(fields[1]));
-                    
-
-
                 }
+                //Loop through the rows and column in the grid to find the highest value row and column
                 foreach (int item in cellRow )
                 {
                     if (item > maxRow)
@@ -541,23 +553,26 @@ namespace Life
                         maxCol = item;
                     }
                 }
-
+                //Return false if any of the row or column in the .seed file exceeds that of the dimension of the grid
                 if (maxRow > rows)
                 {
-                    Console.WriteLine("Alive cell exists outside of the bound of the universe. The row value should be >= {0} ", maxRow);
+                    Console.WriteLine("Alive cell exists outside of the bound of the universe. The row value should" +
+                        " be >= {0} ", maxRow);
                     return false;
                 }
                 else if (maxCol > columns)
                 {
-                    Console.WriteLine("Alive cell exists outside of the bound of the universe. The column value should be >= {0}", maxCol);
+                    Console.WriteLine("Alive cell exists outside of the bound of the universe. The column value " +
+                        "should be >= {0}", maxCol);
                     return false;
                 }
-
                 else if (maxRow > rows && maxCol > columns)
                 {
-                    Console.WriteLine("Alive cell exists outside of the bound of the universe. The row and column should be at least {0} {1}", maxRow, maxCol);
+                    Console.WriteLine("Alive cell exists outside of the bound of the universe. The row and column" +
+                        " should be at least {0} {1}", maxRow, maxCol);
                     return false;
                 }
+                //If no row or column in the .seed file exceeds the dimension of the grid then return true
                 else
                 {
                     return true;

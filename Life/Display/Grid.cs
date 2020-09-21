@@ -140,6 +140,7 @@ namespace Display
         {
             if (0 > row || row >= rows)
             {
+                
                 throw new ArgumentOutOfRangeException("The row index exceeds the bounds of the grid.");
             }
 
@@ -152,23 +153,28 @@ namespace Display
             {
                 throw new ArgumentOutOfRangeException("The specified state is invalid (does not exist).");
             }
-
             cells[row][col].SetState(state);
             cells[row][col].Draw(ref buffer, CellRowOffset(row), CellColOffset(col), CellWidth, CellHeight);
         }
 
-        //Get the current cell
+        //Gets the current cell
         public Cell GetCell(int row, int col)
         {
             return cells[row][col];
         }
 
-        //Check for all adjacent cells of the current cell then add the adjacent cells to a list
+        /// <summary>
+        /// Checks for all adjacent cells of the current cell then add the adjacent cells to a list
+        /// </summary>
+        /// <param name="row"> Gets the row </param>
+        /// <param name="col"> Gets the column </param>
+        /// <param name="periodic"> Checks whether periodic conditions are enabled or not </param>
+        /// <returns> Returns the list of adjacvent cells </returns>
         public List<Cell> GetAdjacentCells(int row, int col, int periodic)
         {
-
             List<Cell> adjacent = new List<Cell>();
 
+            // If 1 then periodic conditions apply
             if (periodic == 1)
             {
                 for (int i = row - 1; i <= row + 1; i++)
@@ -183,6 +189,7 @@ namespace Display
                     }
                 }
             }
+            // For non periodic conditions 
             else
             {
                 for (int i = row - 1; i <= row + 1; i++)
@@ -193,9 +200,7 @@ namespace Display
                         }                         
             }
                 return adjacent;
-            
         }
-
 
         /// <summary>
         /// Renders the current state of the grid (all updates applied after the last render will be rendered).
